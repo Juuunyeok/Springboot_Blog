@@ -1,4 +1,4 @@
-package com.cos.blog.test1;
+package com.hyeok.blog.test1;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
