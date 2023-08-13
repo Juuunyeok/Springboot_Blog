@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group">
-        <textarea class="form-control summernote" rows="5" id="content" > ${borad.content} </textarea>
+        <textarea class="form-control summernote" rows="5" id="content"> ${borad.content} </textarea>
     </div>
 </form>
 <button id="btn-update" class="btn btn-primary">글 수정완료</button>
