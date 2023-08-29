@@ -1,3 +1,4 @@
-# Springboot_Blog
+# Springboot_CommunityWebsite
 
-블로그 만들기
+커뮤니티 사이트 만들기
+
