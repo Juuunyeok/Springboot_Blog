@@ -11,6 +11,9 @@ let index = {
         $("#btn-update").on("click", () => {  // function(){}, ()=> this 를 바인딩하기 위해서!
             this.update();
         });
+        $("#btn-reply-save").on("click", () => {  // function(){}, ()=> this 를 바인딩하기 위해서!
+            this.replySave();
+        });
         // $("#btn-login").on("click", () => {  // function(){}, ()=> this 를 바인딩하기 위해서!
         //     this.login();
         // });
@@ -100,6 +103,43 @@ let index = {
         }).done(function (resp) {
             alert("글쓰기가 수정 되었습니다.");
             location.href = "/"
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+
+    },
+
+    replySave: function () {
+        let data = {
+            content: $("#reply-content").val()
+        };
+        let boardId = $("#boardId").val();
+
+        $.ajax({
+            type: "POST",
+            url: `/api/board/${boardId}/reply`,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        }).done(function (resp) {
+            alert("댓글 작성이 완료 되었습니다.");
+            location.href = `/board/${boardId}`;
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+
+    },
+
+    replyDelete: function (boardId, replyId) {
+        $.ajax({
+            type: "DELETE",
+            url: `/api/board/${boardId}/reply/${replyId}`,
+            dataType: "json"
+
+        }).done(function (resp) {
+            alert("댓글 삭제 성공");
+            location.href = `/board/${boardId}`;
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

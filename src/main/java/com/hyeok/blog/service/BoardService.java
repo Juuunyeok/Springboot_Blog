@@ -1,9 +1,11 @@
 package com.hyeok.blog.service;
 
 import com.hyeok.blog.model.Board;
+import com.hyeok.blog.model.Reply;
 import com.hyeok.blog.model.RoleType;
 import com.hyeok.blog.model.User;
 import com.hyeok.blog.repository.BoardRepository;
+import com.hyeok.blog.repository.ReplyRepository;
 import com.hyeok.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,9 @@ public class BoardService {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -59,6 +64,25 @@ public class BoardService {
         board.setContent(requestBoard.getContent());
         // 해당 함수로 종료시 트랜잭션 종료, 이때 더티채킹 - 자동 업데이트 됨
     }
+
+    @Transactional
+    public void 댓글쓰기(User user, int boardId, Reply requestReply) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(()->{
+                return new IllegalArgumentException("댓글 쓰기 실패");
+        });
+
+        requestReply.setUser(user);
+        requestReply.setBoard(board);
+
+        replyRepository.save(requestReply);
+    }
+
+    @Transactional
+    public void 댓글삭제(int replyId) {
+        replyRepository.deleteById(replyId);
+    }
+
 
 //    @Transactional(readOnly = true)
 //    public User 로그인(User user) {
